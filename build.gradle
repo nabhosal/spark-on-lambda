@@ -1,0 +1,64 @@
+plugins {
+    id 'scala'
+}
+
+group 'com.sparkonlambda'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'scala'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.scala-lang:scala-library:2.12.8'
+
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.5'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
+    compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-scala_2.12', version: '2.9.5'
+
+    compile(group: 'org.apache.spark', name: 'spark-core_2.12', version: '2.4.3')
+    compile(group: 'org.apache.spark', name: 'spark-sql_2.12', version: '2.4.3')
+
+    compile group: 'com.amazonaws', name: 'aws-lambda-java-core', version: '1.2.0'
+    compile group: 'com.amazonaws', name: 'aws-lambda-java-events', version: '2.2.6'
+    compile(group: 'org.apache.hadoop', name: 'hadoop-aws', version: '3.2.0')
+
+//    compile group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.11.598'
+    compile(group: 'org.apache.hadoop', name: 'hadoop-common', version: '3.2.0')
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.scalatest:scalatest_2.12:3.0.5'
+
+    testRuntimeOnly 'org.scala-lang.modules:scala-xml_2.12:1.1.1'
+}
+
+sourceSets {
+    main {
+        scala {
+            srcDirs = ['src/main/scala', 'src/main/java']
+        }
+        java {
+            srcDirs = []
+        }
+    }
+}
+
+task buildZip(type: Zip) {
+    from compileJava
+    from compileScala
+    from processResources
+    into('lib') {
+        from configurations.runtimeClasspath
+    }
+}
+
+build.dependsOn buildZip
