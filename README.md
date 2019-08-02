@@ -5,7 +5,7 @@ Before lambda, we used to build ETL in AWS Glue, but due to varying nature of fe
 We wanted to move away few jobs which are underutilized on aws glue to aws lambda. 
 If a job on lambda is not able to handle data workloads then we can easily migrate the job to glue since the same spark code can be deployed at both service with minimal changes.
 
-To build zip to deploy on lambda
+Build zip to deploy on lambda
 
 ``./gradlew buildZip
 ``
@@ -32,4 +32,5 @@ Performance
 |Small files(in kb) in reasonable number|33.7 MB | 5891|245 sec|  Very good performance, by interpolating the stats we can say it can support reading till 15k records |
 
 Todo
-+ Generating temporary credential instead of using access_key * secret_key or better using IAM role of lambda 
++ Generating temporary credential instead of using access_key * secret_key or better using IAM role of lambda
++ Reducing the size of jar, by keeping minimal required dependency jar's
