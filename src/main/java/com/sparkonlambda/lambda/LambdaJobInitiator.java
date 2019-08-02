@@ -10,6 +10,14 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * LambdaJobInitiator class is a lambda request handler, to demo the understand about invoking spark etl job
+ * written in scala or java.
+ * Input type can be extended with aws service events (i.e S3Event)
+ *
+ * Note, even-though spark code written in scala, it should provide input and output based on java objects.
+ *
+ */
 public class LambdaJobInitiator implements RequestHandler<String, Map<String, Object>>, Serializable {
 
     @Override

@@ -1,8 +1,18 @@
 package com.sparkonlambda.etls
 
-
 import com.sparkonlambda.etls.utils.GetSparkSession
 
+/**
+  * GetObjCountETL is demo ETL job for illustrating basic etl
+  * Input is map
+  * {
+  *   "type": "GetObjCountETL",
+  *   "input_path": "s3a://bucket_name/dumps/144-26Jul2019-100424/",
+  *   "output_dir": "s3a://bucket_name/spark-on-lambda/write/smallfiles/"
+  *   "source_ds_type": "json"
+  * }
+  * it return total row in data-frame
+  */
 class GetObjCountETL extends Serializable {
 
   def func(map: java.util.Map[String, Object]): java.util.Map[String, Object] = {

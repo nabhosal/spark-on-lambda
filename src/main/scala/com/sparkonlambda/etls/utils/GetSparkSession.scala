@@ -4,11 +4,19 @@ import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
 
 /**
-  * GetSparkSession
+  * GetSparkSession is a wrapper class to build sparkSession with appropriate config changes needed
+  * to run it on aws lambda,
+  * Current implementation support, BasicAWSCredentialsProvider way to access S3 for hadoop.
+  * Set below environment variable in lambda
+  *     S3N_AWS_ACCESSKEY, S3N_AWS_SECRETKEY
+  * Set appropriate fs.s3a.endpoint endpoint for getting s3 performance
   */
 
 object GetSparkSession {
-
+  /**
+    * It builds spark session with appropriate config to run on aws lambda
+    * @return SparkSession
+    */
   def get: SparkSession = {
     val conf = new SparkConf().setAppName("Spark-on-lambda")
     conf.setMaster("local[*]")
